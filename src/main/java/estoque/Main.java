@@ -49,11 +49,11 @@ public class Main {
                 } else if (escolha == 5) {
                     var id = Long.parseLong(JOptionPane.showInputDialog("Digite o id do produto: "));
                     RepositoryProduto.removerProduto(id);
-                    JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
                 } else if (escolha == 6) {
                     System.exit(0);
                 }
             } catch (Exception e) {
+                System.out.println(e.getMessage());
                 JOptionPane.showMessageDialog(null, "Opção inválida!");
             }
         }

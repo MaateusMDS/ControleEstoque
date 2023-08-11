@@ -2,6 +2,7 @@ package estoque.repository;
 
 import estoque.model.Produto;
 
+import javax.swing.*;
 import java.util.List;
 
 public class RepositoryProduto extends Repository {
@@ -13,8 +14,6 @@ public class RepositoryProduto extends Repository {
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
-        } finally {
-            manager.close();
         }
         return produto;
     }
@@ -34,21 +33,23 @@ public class RepositoryProduto extends Repository {
             manager.getTransaction().commit();
         } catch (Exception e) {
             manager.getTransaction().rollback();
-        } finally {
-            manager.close();
         }
         return produto;
     }
 
     public static void removerProduto(Long id) {
         try {
-            manager.getTransaction().begin();
-            manager.remove(buscarProduto(id));
-            manager.getTransaction().commit();
+            var produto = buscarProduto(id);
+            if (produto != null) {
+                manager.getTransaction().begin();
+                manager.remove(produto);
+                manager.getTransaction().commit();
+                JOptionPane.showMessageDialog(null, "Produto removido com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Produto não encontrado.");
+            }
         } catch (Exception e) {
             manager.getTransaction().rollback();
-        } finally {
-            manager.close();
         }
     }
 }
